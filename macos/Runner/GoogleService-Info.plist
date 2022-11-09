@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>958002438784-sk85657o3op5e1ag77r5q3em36lu4vjj.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.958002438784-sk85657o3op5e1ag77r5q3em36lu4vjj</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB1zZMGnwvB9UKYgz7dBHigpVBeZPhwOso</string>
+	<key>GCM_SENDER_ID</key>
+	<string>958002438784</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.week7NetworkingDiscussion</string>
+	<key>PROJECT_ID</key>
+	<string>cmsc23-todo-app-abramillano</string>
+	<key>STORAGE_BUCKET</key>
+	<string>cmsc23-todo-app-abramillano.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:958002438784:ios:b73c905ac5973836cf7c65</string>
+</dict>
+</plist>

@@ -4,53 +4,41 @@
   Description: Sample todo app with networking
 */
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:week7_networking_discussion/api/firebase_todo_api.dart';
 import 'package:week7_networking_discussion/api/todo_api.dart';
 import 'package:week7_networking_discussion/models/todo_model.dart';
 
 class TodoListProvider with ChangeNotifier {
-  // final List<Todo> _todoList = [
-  //   Todo(
-  //     completed: true,
-  //     userId: 1,
-  //     id: 1,
-  //     title: "Grocery",
-  //   ),
-  //   Todo(
-  //     completed: true,
-  //     userId: 1,
-  //     id: 2,
-  //     title: "Bills",
-  //   ),
-  //   Todo(
-  //     completed: false,
-  //     userId: 1,
-  //     id: 3,
-  //     title: "Walk dog",
-  //   ),
-  // ];
-
   late TodoAPI todoAPI;
   late Future<List<Todo>> _todoList;
-
-  Future<List<Todo>> get todo => _todoList;
+  late FirebaseTodoAPI firebaseService;
+  late Stream<QuerySnapshot> _todosStream;
+  Todo? _selectedTodo;
 
   TodoListProvider() {
-    todoAPI = TodoAPI();
+    firebaseService = FirebaseTodoAPI();
     fetchTodos();
   }
 
-  // getter
-  // List<Todo> get todo => _todoList;
-  
-  void fetchTodos() {
-    _todoList = todoAPI.fetchTodos();
+  Stream<QuerySnapshot> get todos => _todosStream;
+
+  fetchTodos() {
+    _todosStream = firebaseService.getAllTodos();
     notifyListeners();
   }
 
+  Todo get selected => _selectedTodo!;
 
-  void addTodo(Todo item) {
+  changeSelectedTodo(Todo item) {
+    _selectedTodo = item;
+  }
+
+  void addTodo(Todo item) async {
     // _todoList.add(item);
+    String message = await firebaseService.addTodo(item.toJson(item));
+    print(message);
     notifyListeners();
   }
 
@@ -59,12 +47,9 @@ class TodoListProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteTodo(String title) {
-    // for (int i = 0; i < _todoList.length; i++) {
-    //   if (_todoList[i].title == title) {
-    //     _todoList.remove(_todoList[i]);
-    //   }
-    // }
+  void deleteTodo() async {
+    String message = await firebaseService.deleteTodo(_selectedTodo!.id);
+    print(message);
     notifyListeners();
   }
 
