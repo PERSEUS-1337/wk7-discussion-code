@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:week7_networking_discussion/models/todo_model.dart';
 import 'package:week7_networking_discussion/providers/todo_provider.dart';
 import 'package:week7_networking_discussion/screens/modal_todo.dart';
+import 'package:week7_networking_discussion/screens/modal_todo_details.dart';
 
 class TodoPage extends StatefulWidget {
   const TodoPage({super.key});
@@ -51,110 +52,71 @@ class _TodoPageState extends State<TodoPage> {
               Todo todo = Todo.fromJson(
                   snapshot.data?.docs[index].data() as Map<String, dynamic>);
               return Dismissible(
-                  key: Key(todo.id.toString()),
-                  onDismissed: (direction) {
-                    context.read<TodoListProvider>().changeSelectedTodo(todo);
-                    context.read<TodoListProvider>().deleteTodo();
+                key: Key(todo.id.toString()),
+                onDismissed: (direction) {
+                  context.read<TodoListProvider>().changeSelectedTodo(todo);
+                  context.read<TodoListProvider>().deleteTodo();
 
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('${todo.title} dismissed')));
-                  },
-                  background: Container(
-                    color: Colors.red,
-                    child: const Icon(Icons.delete),
-                  ),
-                  child: Column(
-                    children: [
-                      ListTile(
-                        title: Text(todo.title),
-                        leading: Checkbox(
-                          value: todo.completed,
-                          onChanged: (bool? value) {
-                            context
-                                .read<TodoListProvider>()
-                                .toggleStatus(index, value!);
-                          },
-                        ),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                // showDialog(
-                                //   context: context,
-                                //   builder: (BuildContext context) => TodoModal(
-                                //     type: 'Edit',
-                                //     todoIndex: index,
-                                //   ),
-                                // );
-                              },
-                              icon: const Icon(Icons.create_outlined),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                context
-                                    .read<TodoListProvider>()
-                                    .changeSelectedTodo(todo);
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) => TodoModal(
-                                    type: 'Delete',
-                                    // todoIndex: index,
-                                  ),
-                                );
-                              },
-                              icon: const Icon(Icons.delete_outlined),
-                            )
-                          ],
-                        ),
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('${todo.title} dismissed')));
+                },
+                background: Container(
+                  color: Colors.red,
+                  child: const Icon(Icons.delete),
+                ),
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: Text(todo.title),
+                      leading: Checkbox(
+                        value: todo.completed,
+                        onChanged: (bool? value) {
+                          context
+                              .read<TodoListProvider>()
+                              .toggleStatus(index, value!);
+                        },
                       ),
-                      Text("${todo.id}"),
-                    ],
-                  )
-                  // child: ListTile(
-                  //   title: Text(todo.title),
-                  //   leading: Checkbox(
-                  //     value: todo.completed,
-                  //     onChanged: (bool? value) {
-                  //       context
-                  //           .read<TodoListProvider>()
-                  //           .toggleStatus(index, value!);
-                  //     },
-                  //   ),
-                  //   trailing: Row(
-                  //     mainAxisSize: MainAxisSize.min,
-                  //     children: [
-                  //       IconButton(
-                  //         onPressed: () {
-                  //           // showDialog(
-                  //           //   context: context,
-                  //           //   builder: (BuildContext context) => TodoModal(
-                  //           //     type: 'Edit',
-                  //           //     todoIndex: index,
-                  //           //   ),
-                  //           // );
-                  //         },
-                  //         icon: const Icon(Icons.create_outlined),
-                  //       ),
-                  //       IconButton(
-                  //         onPressed: () {
-                  //           context
-                  //               .read<TodoListProvider>()
-                  //               .changeSelectedTodo(todo);
-                  //           showDialog(
-                  //             context: context,
-                  //             builder: (BuildContext context) => TodoModal(
-                  //               type: 'Delete',
-                  //               // todoIndex: index,
-                  //             ),
-                  //           );
-                  //         },
-                  //         icon: const Icon(Icons.delete_outlined),
-                  //       )
-                  //     ],
-                  //   ),
-                  // ),
-                  );
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // IconButton(
+                          //    onPressed: () {
+                          //     context
+                          //         .read<TodoListProvider>()
+                          //         .changeSelectedTodo(todo);
+                          //     showDialog(
+                          //       context: context,
+                          //       builder: (BuildContext context) => TodoModal(
+                          //         type: 'Delete',
+                          //         // todoIndex: index,
+                          //       ),
+                          //     );
+                          //   },
+                          //   icon: const Icon(Icons.remove_red_eye_outlined),
+                          // ),
+                          IconButton(
+                            onPressed: () {
+                              context
+                                  .read<TodoListProvider>()
+                                  .changeSelectedTodo(todo);
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) => TodoModal(
+                                  type: 'Delete',
+                                  // todoIndex: index,
+                                ),
+                              );
+                            },
+                            icon: const Icon(Icons.delete_outlined),
+                          )
+                        ],
+                      ),
+                    ),
+                    // Comment out for now but this just confirms that this method works for displaying extra data
+                    // Text("${todo.id}"),
+                  ],
+                ),
+              );
             }),
           );
         },
